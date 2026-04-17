@@ -66,7 +66,7 @@ const Orders = () => {
     }
 
     try{
-      const res = await fetch(`http://localhost:8080/api/orders/user/${userId}`);
+      const res = await fetch(`https://easybuy-backend-xadk.onrender.com/api/orders/user/${userId}`);
       if(!res.ok) throw new Error("Orders fetch failed");
       const data = await res.json();
       setOrders(Array.isArray(data) ? data : []);
@@ -128,7 +128,7 @@ const Orders = () => {
 
     try{
       const res = await fetch(
-        `http://localhost:8080/api/orders/${orderId}`,
+        `https://easybuy-backend-xadk.onrender.com/api/orders/${orderId}`,
         { method:"DELETE" }
       );
       if(!res.ok) throw new Error("Cancel failed");
@@ -226,7 +226,7 @@ const Orders = () => {
     const image = img
       ? (img.startsWith("http")
           ? img
-          : `http://localhost:8080${img}`)
+          : `https://easybuy-backend-xadk.onrender.com${img}`)
       : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
   
     const orderName = order.name || user?.name || "User";
@@ -390,7 +390,7 @@ const Orders = () => {
       src={
         order.productDetails?.image?.startsWith("http")
           ? order.productDetails.image
-          : `http://localhost:8080${order.productDetails?.image}`
+          : `https://easybuy-backend-xadk.onrender.com${order.productDetails?.image}`
       }
       alt=""
       style={{ width: 80, height: 80, objectFit: "contain" }}
