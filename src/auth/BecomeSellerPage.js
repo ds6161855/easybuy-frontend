@@ -28,7 +28,6 @@ const BecomeSellerPage = () => {
     "Electronics","Fashion", "Home & Kitchen", "Beauty", "Books","Other"
   ];
 
-  // ⏱ TIMER
   useEffect(() => {
     if (timer <= 0) return;
     const interval = setInterval(() => {
@@ -37,12 +36,9 @@ const BecomeSellerPage = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
-  // ✏️ INPUT
   const handleChange = (e) => {
     let { name, value } = e.target;
-
     if (name === "gst") value = value.toUpperCase();
-
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
@@ -50,7 +46,6 @@ const BecomeSellerPage = () => {
     setTouched(prev => ({ ...prev, [e.target.name]: true }));
   };
 
-  // 🔥 VALIDATION (STRICT)
   useEffect(() => {
     let temp = {};
 
@@ -82,7 +77,7 @@ const BecomeSellerPage = () => {
 
   const isValid = Object.values(errors).every(x => x === "");
 
-  // 📲 SEND OTP
+  // ===================== SEND OTP FIXED =====================
   const sendOtp = async () => {
 
     setTouched({
@@ -110,23 +105,14 @@ const BecomeSellerPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("for (let item of localCart) {
-      await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          productId: item.productId,
-          quantity: item.quantity
-        })
-      });
-    }/api/seller/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cleanData)
-      });
-
-      if (!res.ok) throw new Error("Server Error");
+      const res = await fetch(
+        "https://easybuy-backend-xadk.onrender.com/api/seller/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cleanData)
+        }
+      );
 
       const data = await res.json();
 
@@ -154,7 +140,7 @@ const BecomeSellerPage = () => {
     setLoading(false);
   };
 
-  // 🔐 VERIFY OTP
+  // ===================== VERIFY OTP FIXED =====================
   const handleVerifyOtp = async () => {
 
     if (!/^[0-9]{4,6}$/.test(otp)) {
@@ -164,54 +150,43 @@ const BecomeSellerPage = () => {
         severity: "warning"
       });
     }
-  
+
     setLoading(true);
-  
+
     try {
-      const res = await fetch("for (let item of localCart) {
-      await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          productId: item.productId,
-          quantity: item.quantity
-        })
-      });
-    }/api/seller/verify",  {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          otp: otp
-        })
-      });
-  
+      const res = await fetch(
+        "https://easybuy-backend-xadk.onrender.com/api/seller/verify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form,
+            otp
+          })
+        }
+      );
+
       const data = await res.json();
-  
+
       if (!data.success) {
         throw new Error(data.message || "Invalid OTP");
       }
-  
-      // 🔥 IMPORTANT — navbar ke liye
+
       localStorage.setItem("seller", JSON.stringify(data.seller));
-  
-      // optional
       localStorage.setItem("sellerPhone", data.seller.phone);
-  
-      // 🔥 navbar update
+
       window.dispatchEvent(new Event("sellerChanged"));
-  
+
       setSnack({
         open: true,
         message: "Registered Successfully 🚀",
         severity: "success"
       });
-  
+
       setTimeout(() => {
         window.location.href = "/seller/dashboard";
       }, 1000);
-  
+
     } catch (err) {
       setSnack({
         open: true,
@@ -219,19 +194,16 @@ const BecomeSellerPage = () => {
         severity: "error"
       });
     }
-  
+
     setLoading(false);
   };
 
   return (
-    <Box sx={{ bgcolor: "#f1f3f6",  minHeight: "calc(100vh - 160px)", p: 3 }}>
+    <Box sx={{ bgcolor: "#f1f3f6", minHeight: "calc(100vh - 160px)", p: 3 }}>
 
       <Paper sx={{ p: 4, mb: 3, borderRadius: 3 }}>
         <Typography variant="h4" fontWeight="bold">
           Become a Seller 🛒
-        </Typography>
-        <Typography sx={{ mt: 1, color: "gray" }}>
-          Start your business with us and reach millions of customers.
         </Typography>
       </Paper>
 
@@ -239,91 +211,49 @@ const BecomeSellerPage = () => {
 
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight="bold">
-              Why Sell With Us?
-            </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography>✔ Huge customer base</Typography>
-            <Typography>✔ Easy listing</Typography>
-            <Typography>✔ Secure payments</Typography>
-            <Typography>✔ Fast delivery</Typography>
-            <Typography>✔ 24x7 support</Typography>
+            <Typography fontWeight="bold">Why Sell With Us?</Typography>
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3 }}>
 
-            <Typography variant="h6" fontWeight="bold">
-              Register as Seller
-            </Typography>
-
-            <Divider sx={{ my: 2 }} />
-
             <TextField fullWidth label="Full Name *" name="name"
-              value={form.name} onChange={handleChange} onBlur={handleBlur}
-              error={touched.name && !!errors.name}
-              helperText={touched.name && errors.name} sx={{ mb: 2 }} />
+              value={form.name} onChange={handleChange} sx={{ mb: 2 }} />
 
             <TextField fullWidth label="Email *" name="email"
-              value={form.email} onChange={handleChange} onBlur={handleBlur}
-              error={touched.email && !!errors.email}
-              helperText={touched.email && errors.email} sx={{ mb: 2 }} />
+              value={form.email} onChange={handleChange} sx={{ mb: 2 }} />
 
-            <TextField fullWidth label="Phone Number *" name="phone"
-              value={form.phone} onChange={handleChange} onBlur={handleBlur}
-              disabled={showOtp}
-              error={touched.phone && !!errors.phone}
-              helperText={touched.phone && errors.phone} sx={{ mb: 2 }} />
+            <TextField fullWidth label="Phone *" name="phone"
+              value={form.phone} onChange={handleChange} sx={{ mb: 2 }} />
 
             <TextField fullWidth label="Business Name *" name="businessName"
-              value={form.businessName} onChange={handleChange} onBlur={handleBlur}
-              error={touched.businessName && !!errors.businessName}
-              helperText={touched.businessName && errors.businessName} sx={{ mb: 2 }} />
+              value={form.businessName} onChange={handleChange} sx={{ mb: 2 }} />
 
-            <TextField fullWidth label="GST Number *" name="gst"
-              value={form.gst} onChange={handleChange} onBlur={handleBlur}
-              error={touched.gst && !!errors.gst}
-              helperText={touched.gst && errors.gst} sx={{ mb: 2 }} />
+            <TextField fullWidth label="GST *" name="gst"
+              value={form.gst} onChange={handleChange} sx={{ mb: 2 }} />
 
-            <TextField select fullWidth label="Product Category *"
+            <TextField select fullWidth label="Category"
               name="category" value={form.category}
-              onChange={handleChange} onBlur={handleBlur}
-              error={touched.category && !!errors.category}
-              helperText={touched.category && errors.category}
-              sx={{ mb: 2 }}
-            >
-              {categories.map((cat, i) => (
-                <MenuItem key={i} value={cat}>{cat}</MenuItem>
+              onChange={handleChange} sx={{ mb: 2 }}>
+              {categories.map((c, i) => (
+                <MenuItem key={i} value={c}>{c}</MenuItem>
               ))}
             </TextField>
 
             {!showOtp ? (
-              <Button fullWidth variant="contained"
-                onClick={sendOtp}
-                disabled={loading}
-              >
-                {loading ? <CircularProgress size={24} /> : "Register Now"}
+              <Button fullWidth variant="contained" onClick={sendOtp}>
+                {loading ? <CircularProgress size={20} /> : "Register"}
               </Button>
             ) : (
               <>
-                <TextField fullWidth label="Enter OTP *"
+                <TextField fullWidth label="OTP"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  inputProps={{ maxLength: 6 }}
-                  sx={{ mb: 2 }}
-                />
+                  sx={{ mb: 2 }} />
 
-                <Button fullWidth variant="contained"
-                  onClick={handleVerifyOtp}
-                  disabled={loading}
-                  sx={{ mb: 1 }}
-                >
-                  {loading ? <CircularProgress size={24} /> : "Verify OTP"}
-                </Button>
-
-                <Button fullWidth disabled={timer > 0} onClick={sendOtp}>
-                  {timer > 0 ? `Resend in ${timer}s` : "Resend OTP"}
+                <Button fullWidth variant="contained" onClick={handleVerifyOtp}>
+                  Verify OTP
                 </Button>
               </>
             )}
@@ -334,7 +264,7 @@ const BecomeSellerPage = () => {
 
       <Snackbar open={snack.open} autoHideDuration={3000}
         onClose={() => setSnack({ ...snack, open: false })}>
-        <Alert severity={snack.severity} variant="filled">
+        <Alert severity={snack.severity}>
           {snack.message}
         </Alert>
       </Snackbar>
