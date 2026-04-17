@@ -110,7 +110,17 @@ const BecomeSellerPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8080/api/seller/register", {
+      const res = await fetch("for (let item of localCart) {
+      await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          productId: item.productId,
+          quantity: item.quantity
+        })
+      });
+    }/api/seller/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(cleanData)
@@ -158,7 +168,17 @@ const BecomeSellerPage = () => {
     setLoading(true);
   
     try {
-      const res = await fetch("http://localhost:8080/api/seller/verify",  {
+      const res = await fetch("for (let item of localCart) {
+      await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          productId: item.productId,
+          quantity: item.quantity
+        })
+      });
+    }/api/seller/verify",  {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
