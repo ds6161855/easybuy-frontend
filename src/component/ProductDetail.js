@@ -71,7 +71,7 @@ function ProductDetail() {
     setLoadingCart(true);
   
     try {
-      const res = await fetch("http://localhost:8080/api/cart/add", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -106,7 +106,7 @@ function ProductDetail() {
     setLoadingOrder(true);
 
     try {
-      const res = await fetch("http://localhost:8080/api/orders/place", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/orders/place", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -159,7 +159,7 @@ function ProductDetail() {
 
   // ================= PRODUCT FETCH =================
   useEffect(() => {
-    fetch(`http://localhost:8080/api/products/${id}`)
+    fetch(`https://easybuy-backend-xadk.onrender.com/api/products/${id}`)
       .then(res => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -172,7 +172,7 @@ function ProductDetail() {
           setSelectedImage(
             data.image.startsWith("http")
               ? data.image
-              : `http://localhost:8080${data.image}`
+              : `https://easybuy-backend-xadk.onrender.com${data.image}`
           );
         }
       })
@@ -187,7 +187,7 @@ function ProductDetail() {
   const imageUrl = product.image
     ? product.image.startsWith("http")
       ? product.image
-      : `http://localhost:8080${product.image}`
+      : `https://easybuy-backend-xadk.onrender.com${product.image}`
     : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
 
   return (
