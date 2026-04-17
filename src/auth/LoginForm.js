@@ -103,7 +103,7 @@ const LoginForm = ({ switchToRegister = () => {}, onSuccess = () => {} }) => {
     const localCart = JSON.parse(localStorage.getItem("cart")) || [];
   
     for (let item of localCart) {
-      await fetch("http://localhost:8080/api/cart/add", {
+      await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
