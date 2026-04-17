@@ -58,7 +58,7 @@ const CategorySection = () => {
 
     setLoading(true);
 
-    fetch(`http://localhost:8080/api/products?category=${category}`)
+    fetch(`https://easybuy-backend-xadk.onrender.com/api/products?category=${category}`)
       .then(res => res.json())
       .then(data => {
         setProducts(Array.isArray(data) ? data : []);
