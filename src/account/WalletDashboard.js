@@ -6,7 +6,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 
-const API = "http://localhost:8080/api/cards";
+const API = "https://easybuy-backend-xadk.onrender.com/api/cards";
 
 const isValidUpi = (upi) => /^[\w.-]+@[\w]+$/.test(upi);
 
@@ -173,7 +173,7 @@ const fetchWallet = async () => {
     const userId = localStorage.getItem("userId");
   
     try {
-      const res = await fetch("http://localhost:8080/api/payments/razorpay/order", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/payments/razorpay/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -197,7 +197,7 @@ const fetchWallet = async () => {
   
         handler: async function (response) {
           // ✅ VERIFY + ADD MONEY
-          await fetch("http://localhost:8080/api/cards/add-money", {
+          await fetch("https://easybuy-backend-xadk.onrender.com/api/cards/add-money", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -246,7 +246,7 @@ const fetchWallet = async () => {
       }
   
       try {
-        await fetch("http://localhost:8080/api/cards/add-money", {
+        await fetch("https://easybuy-backend-xadk.onrender.com/api/cards/add-money", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userId, amount: -totalAmount })
@@ -281,7 +281,7 @@ const fetchWallet = async () => {
   
     try {
       // ================= CREATE RAZORPAY ORDER =================
-      const res = await fetch("http://localhost:8080/api/payments/razorpay/order", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/payments/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, amount: totalAmount })
@@ -319,7 +319,7 @@ const fetchWallet = async () => {
         prefill: { contact: "9999999999" },
         handler: async function (response) {
           try {
-            await fetch("http://localhost:8080/api/payments/verify", {
+            await fetch("https://easybuy-backend-xadk.onrender.com/api/payments/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(response)
