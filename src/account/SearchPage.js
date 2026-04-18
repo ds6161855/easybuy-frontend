@@ -31,7 +31,7 @@ const SearchPage = () => {
       setLoading(true);
 
       const res = await axios.get(
-        `http://localhost:8080/api/products/search?query=${query}&sort=${sort}`
+        `https://easybuy-backend-xadk.onrender.com/api/products/search?query=${query}&sort=${sort}`
       );
 
       setProducts(res.data);
