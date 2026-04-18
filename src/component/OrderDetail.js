@@ -86,7 +86,7 @@ const OrderDetail = () => {
   const image = product.image
     ? product.image.startsWith("http")
       ? product.image
-      : `http://localhost:8080${product.image}`
+      : `https://easybuy-backend-xadk.onrender.com${product.image}`
     : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
 
   const normalize = (s) => s?.toUpperCase();
