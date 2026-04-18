@@ -118,7 +118,7 @@ const SellerKycPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8080/api/seller/kyc", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/seller/kyc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, ...cleanData })
