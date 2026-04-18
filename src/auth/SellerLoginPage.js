@@ -38,7 +38,7 @@ const SellerLoginPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8080/api/seller/login/send-otp", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/seller/login/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone })
@@ -68,7 +68,7 @@ const SellerLoginPage = () => {
     setLoading(true);
   
     try {
-      const res = await fetch("http://localhost:8080/api/seller/login/verify", {
+      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/seller/login/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, otp })
