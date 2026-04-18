@@ -146,7 +146,7 @@ const { t } = useTranslation();
   const loadCartCount = () => {
     const id = getUserOrGuestId();
   
-    fetch(`http://localhost:8080/api/cart/${id}`)
+    fetch(`https://easybuy-backend-xadk.onrender.com/api/cart/${id}`)
       .then(res => res.ok ? res.json() : Promise.reject()) // ✅ FIX
       .then(data => {
         if (Array.isArray(data)) {
