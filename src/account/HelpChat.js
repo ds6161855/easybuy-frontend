@@ -82,7 +82,7 @@ const HelpChat = () => {
     botReply("Creating your request...");
 
     try {
-      await fetch("https://easybuy-backend-xadk.onrender.com/api/support", {
+      await fetch("https://easybuy-backend-85si.onrender.com/api/support", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
