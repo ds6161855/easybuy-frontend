@@ -106,7 +106,7 @@ const BecomeSellerPage = () => {
 
     try {
       const res = await fetch(
-        "https://easybuy-backend-xadk.onrender.com/api/seller/register",
+        "https://easybuy-backend-85si.onrender.com/api/seller/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -155,7 +155,7 @@ const BecomeSellerPage = () => {
 
     try {
       const res = await fetch(
-        "https://easybuy-backend-xadk.onrender.com/api/seller/verify",
+        "https://easybuy-backend-85si.onrender.com/api/seller/verify",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
