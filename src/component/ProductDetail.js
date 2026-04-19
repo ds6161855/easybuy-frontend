@@ -172,7 +172,7 @@ function ProductDetail() {
           setSelectedImage(
             data.image.startsWith("http")
               ? data.image
-              : `https://easybuy-backend-85si.onrender.com${data.image}`
+              : `https://easybuy-backend-85si.onrender.com/${data.image}`
           );
         }
       })
@@ -187,7 +187,7 @@ function ProductDetail() {
   const imageUrl = product.image
     ? product.image.startsWith("http")
       ? product.image
-      : `https://easybuy-backend-85si.onrender.com${product.image}`
+      : `https://easybuy-backend-85si.onrender.com/${product.image}`
     : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
 
   return (
