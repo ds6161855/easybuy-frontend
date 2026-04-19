@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const API = "https://easybuy-backend-xadk.onrender.com/api/payments";
+const API = "https://easybuy-backend-85si.onrender.com/api/payments";
 
 const PaymentDashboard = () => {
   const [payments, setPayments] = useState([]);
