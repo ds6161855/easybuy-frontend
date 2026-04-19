@@ -54,7 +54,7 @@ const CartPage = () => {
 
     const id = getUserOrGuestId();
 
-    fetch(`https://easybuy-backend-xadk.onrender.com/api/cart/${id}`)
+    fetch(`https://easybuy-backend-85si.onrender.com/api/cart/${id}`)
       .then(res => res.ok ? res.json() : Promise.reject())
       .then(data => {
         if (Array.isArray(data)) {
@@ -80,7 +80,7 @@ const CartPage = () => {
     const userId = getUserOrGuestId();
 
     try {
-      await fetch("https://easybuy-backend-xadk.onrender.com/api/cart/remove", {
+      await fetch("https://easybuy-backend-85si.onrender.com/api/cart/remove", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, productId })
@@ -104,7 +104,7 @@ const CartPage = () => {
       const userId = getUserOrGuestId();
       const orderUser = user || {};
   
-      const res = await fetch("https://easybuy-backend-xadk.onrender.com/api/orders/place", {
+      const res = await fetch("https://easybuy-backend-85si.onrender.com/api/orders/place", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -200,7 +200,7 @@ const CartPage = () => {
         const imageUrl = item.image
           ? item.image.startsWith("http")
             ? item.image
-            : `https://easybuy-backend-xadk.onrender.com${item.image}`
+            : `https://easybuy-backend-85si.onrender.com${item.image}`
           : "https://dummyimage.com/300x300";
 
         return (
