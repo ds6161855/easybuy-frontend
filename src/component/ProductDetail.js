@@ -164,18 +164,15 @@ function ProductDetail() {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
       })
-      .then(data => {
-        setProduct(data);
+      ..then(data => {
+  setProduct(data);
 
-        // ✅ FIX: selected image set
-        if (data.image) {
-          setSelectedImage(
-            data.image.startsWith("http")
-              ? data.image
-              : `https://easybuy-backend-85si.onrender.com/${data.image}`
-          );
-        }
-      })
+  // SAFE IMAGE SET
+  setSelectedImage(
+  data.image?.startsWith("http")
+    ? data.image
+    : `https://easybuy-backend-85si.onrender.com/${data.image}`
+);
       .catch(() => {
         alert("Product not found");
         navigate("/");
@@ -184,12 +181,7 @@ function ProductDetail() {
 
   if (!product) return <Typography p={5}>Loading...</Typography>;
 
-  const imageUrl = product.image
-    ? product.image.startsWith("http")
-      ? product.image
-      : `https://easybuy-backend-85si.onrender.com/${product.image}`
-    : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
-
+  const imageUrl = product?.image || "";
   return (
     <Box sx={{ background: "#f1f3f6", minHeight: "100vh", p: 4 }}>
       <Grid container spacing={4}>
