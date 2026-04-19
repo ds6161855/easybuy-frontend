@@ -226,7 +226,7 @@ const Orders = () => {
     const image = img
       ? (img.startsWith("http")
           ? img
-          : `https://easybuy-backend-85si.onrender.com${img}`)
+          : `https://easybuy-backend-85si.onrender.com/${img}`)
       : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
   
     const orderName = order.name || user?.name || "User";
