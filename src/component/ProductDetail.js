@@ -158,26 +158,26 @@ function ProductDetail() {
   }, [pendingAction, handleBuyNow, handleAddToCart]);
 
   // ================= PRODUCT FETCH =================
-  useEffect(() => {
-    fetch(`https://easybuy-backend-85si.onrender.com/api/products/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Product not found");
-        return res.json();
-      })
-      ..then(data => {
-  setProduct(data);
+ useEffect(() => {
+  fetch(`https://easybuy-backend-85si.onrender.com/api/products/${id}`)
+    .then(res => {
+      if (!res.ok) throw new Error("Product not found");
+      return res.json();
+    })
+    .then(data => {
+      setProduct(data);
 
-  // SAFE IMAGE SET
-  setSelectedImage(
-  data.image?.startsWith("http")
-    ? data.image
-    : `https://easybuy-backend-85si.onrender.com/${data.image}`
-);
-      .catch(() => {
-        alert("Product not found");
-        navigate("/");
-      });
-  }, [id, navigate]);
+      setSelectedImage(
+        data.image?.startsWith("http")
+          ? data.image
+          : `https://easybuy-backend-85si.onrender.com/${data.image}`
+      );
+    })
+    .catch(() => {
+      alert("Product not found");
+      navigate("/");
+    });
+}, [id, navigate]);
 
   if (!product) return <Typography p={5}>Loading...</Typography>;
 
