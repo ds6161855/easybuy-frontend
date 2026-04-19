@@ -181,7 +181,11 @@ function ProductDetail() {
 
   if (!product) return <Typography p={5}>Loading...</Typography>;
 
-  const imageUrl = product?.image || "";
+  const imageUrl = product?.image
+  ? product.image.startsWith("http")
+    ? product.image
+    : `https://easybuy-backend-85si.onrender.com/${product.image}`
+  : "https://dummyimage.com/300x300/cccccc/000000&text=No+Image";
   return (
     <Box sx={{ background: "#f1f3f6", minHeight: "100vh", p: 4 }}>
       <Grid container spacing={4}>
