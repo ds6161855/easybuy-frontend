@@ -10,6 +10,9 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../Api/axiosConfig";
 import AuthLayout from "./AuthLayout";
+import { createClient } from "@supabase/supabase-js";
+
+
 
 const LoginForm = ({ switchToRegister = () => {}, onSuccess = () => {} }) => {
   const navigate = useNavigate();
@@ -25,6 +28,10 @@ const LoginForm = ({ switchToRegister = () => {}, onSuccess = () => {} }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("info");
+  const supabase = createClient(
+  "YOUR_SUPABASE_URL",
+  "YOUR_SUPABASE_ANON_KEY"
+);
 
   const showMsg = (msg, sev = "info") => {
     setMessage(msg);
@@ -75,28 +82,29 @@ const LoginForm = ({ switchToRegister = () => {}, onSuccess = () => {} }) => {
   };
 
   // ================= SEND OTP =================
-  const handleSendOtp = async () => {
-    if (!validateMobile()) return;
-    setLoading(true);
-    try {
-      const res = await api.post(
-        "/api/auth/send-otp",
-        { mobile },
-        { params: { isLogin: true } }
-      );
-      showMsg(res?.data?.message || "OTP sent successfully", "success");
-      setOtpSent(true);
-      setTimer(30);
-    } catch (err) {
-      console.error(err);
-      showMsg(
-        err?.response?.data?.message || "Failed to send OTP",
-        "error"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+const handleSendOtp = async () => {
+  if (!validateMobile()) return;
+  setLoading(true);
+
+  try {
+    const email = "dsmewada61@gmail.com";
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email
+    });
+
+    if (error) throw error;
+
+    showMsg("OTP sent to your email", "success");
+    setOtpSent(true);
+    setTimer(30);
+
+  } catch (err) {
+    showMsg(err.message || "Failed to send OTP", "error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const mergeCartAfterLogin = async () => {
     const userId = localStorage.getItem("userId");
@@ -125,43 +133,39 @@ const handleVerifyOtp = async () => {
   setLoading(true);
 
   try {
-    const res = await api.post("/api/auth/verify-otp", { mobile, otp });
+    const email = "dsmewada61@gmail.com";
 
-    const userId = res?.data?.userId;
-    if (!userId) throw new Error("UserId missing");
+    const { data, error } = await supabase.auth.verifyOtp({
+      email: email,
+      token: otp,
+      type: "email"
+    });
+
+    if (error) throw error;
+
+    const user = data.user;
 
     const userData = {
-      id: userId,
-      name: res?.data?.name || "",
-      mobile: res?.data?.mobile || mobile,
-      email: res?.data?.email || "",
-      address: res?.data?.address || ""
+      id: user.id,
+      email: user.email
     };
 
     localStorage.clear();
     localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("userId", String(userId));
+    localStorage.setItem("userId", user.id);
     localStorage.setItem("isLoggedIn", "true");
-    
 
     showMsg("Login successful", "success");
 
-    // 🔥 FIX (IMPORTANT)
-    navigate("/")
+    navigate("/");
     onSuccess();
-    mergeCartAfterLogin();
-
-    setTimeout(() => {
-      window.dispatchEvent(new Event("userChanged"));
-    }, 200);
 
   } catch (err) {
-    showMsg(err?.response?.data?.message || "Invalid OTP", "error");
+    showMsg(err.message || "Invalid OTP", "error");
   } finally {
     setLoading(false);
   }
 };
-
   const buttonStyle = {
     mt: 2,
     height: 48,
