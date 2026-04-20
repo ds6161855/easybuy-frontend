@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import api from "../Api/axiosConfig";
 import AuthLayout from "./AuthLayout";
+import supabase from "../supabaseClient";
 
 const RegisterForm = ({ switchToLogin = () => {} }) => {
 
@@ -80,36 +81,31 @@ const RegisterForm = ({ switchToLogin = () => {} }) => {
     if (mobileError) setMobileError("");
   };
 
-  const handleSendOtp = async () => {
+ const handleSendOtp = async () => {
+  if (!validateMobile()) return;
 
-    if (!validateMobile()) return;
+  setLoading(true);
 
-    setLoading(true);
+  try {
+    const email = "dsmewada61@gmail.com";
 
-    try {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true
+      }
+    });
 
-      const res = await api.post(
-        "/api/auth/send-otp",
-        { mobile },
-        { params: { isLogin: false } }
-      );
+    if (error) throw error;
 
-      showMsg(res?.data?.message || "OTP Sent Successfully", "success");
-      setOtpSent(true);
+    showMsg("Signup link sent to your email", "success");
 
-    } catch (error) {
-
-      console.log(error.response);
-
-      showMsg(
-        error?.response?.data?.message || "Failed to send OTP",
-        "error"
-      );
-
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    showMsg(err.message, "error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleVerifyOtp = async () => {
 
