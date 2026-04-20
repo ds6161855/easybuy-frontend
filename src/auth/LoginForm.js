@@ -10,7 +10,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../Api/axiosConfig";
 import AuthLayout from "./AuthLayout";
-import { createClient } from "@supabase/supabase-js";
+import supabase from "../supabaseClient"; // agar src me direct hai
 
 
 
@@ -28,10 +28,7 @@ const LoginForm = ({ switchToRegister = () => {}, onSuccess = () => {} }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("info");
-  const supabase = createClient(
-  "YOUR_SUPABASE_URL",
-  "YOUR_SUPABASE_ANON_KEY"
-);
+  
 
   const showMsg = (msg, sev = "info") => {
     setMessage(msg);
