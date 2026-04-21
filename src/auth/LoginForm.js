@@ -10,7 +10,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../Api/axiosConfig";
 import AuthLayout from "./AuthLayout";
-import supabase from "../supabaseClient"; // agar src me direct hai
+
 
 
 
@@ -84,20 +84,16 @@ const handleSendOtp = async () => {
   setLoading(true);
 
   try {
-    const email = "dsmewada61@gmail.com";
-
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email
+    const res = await api.post("/api/auth/send-otp", {
+      mobile: mobile
     });
 
-    if (error) throw error;
-
-    showMsg("OTP sent to your email", "success");
+    showMsg(res.data.message, "success");
     setOtpSent(true);
     setTimer(30);
 
   } catch (err) {
-    showMsg(err.message || "Failed to send OTP", "error");
+    showMsg(err?.response?.data?.message || "Failed to send OTP", "error");
   } finally {
     setLoading(false);
   }
@@ -130,26 +126,15 @@ const handleVerifyOtp = async () => {
   setLoading(true);
 
   try {
-    const email = "dsmewada61@gmail.com";
-
-    const { data, error } = await supabase.auth.verifyOtp({
-      email: email,
-      token: otp,
-      type: "email"
+    const res = await api.post("/api/auth/verify-otp", {
+      mobile: mobile,
+      otp: otp
     });
 
-    if (error) throw error;
+    const user = res.data;
 
-    const user = data.user;
-
-    const userData = {
-      id: user.id,
-      email: user.email
-    };
-
-    localStorage.clear();
-    localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("userId", user.id);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("userId", user.userId);
     localStorage.setItem("isLoggedIn", "true");
 
     showMsg("Login successful", "success");
@@ -158,7 +143,7 @@ const handleVerifyOtp = async () => {
     onSuccess();
 
   } catch (err) {
-    showMsg(err.message || "Invalid OTP", "error");
+    showMsg(err?.response?.data?.message || "Invalid OTP", "error");
   } finally {
     setLoading(false);
   }
