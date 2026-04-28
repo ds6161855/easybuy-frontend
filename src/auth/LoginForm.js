@@ -84,9 +84,9 @@ const handleSendOtp = async () => {
   setLoading(true);
 
   try {
-    const res = await api.post("/api/auth/send-otp", {
-      mobile: mobile
-    });
+    const res = await api.post("/api/auth/send-otp?isLogin=false", {
+  mobile: mobile
+});
 
     showMsg(res.data.message, "success");
     setOtpSent(true);
