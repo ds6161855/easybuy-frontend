@@ -58,14 +58,14 @@ const LoginForm = ({ switchToRegister = () => {}, onSuccess = () => {} }) => {
   };
 
   const validateOtp = () => {
-    if (!otp) {
-      setOtpError("OTP required");
-      return false;
-    }
-    if (!/^\d{6}$/.test(otp)) {
-      setOtpError("Enter valid 6 digit OTP");
-      return false;
-    }
+  if (!otp) {
+    setOtpError("OTP required");
+    return false;
+  }
+  if (!/^\d{4}$/.test(otp)) {
+    setOtpError("Enter valid 4 digit OTP");
+    return false;
+  }
     setOtpError("");
     return true;
   };
