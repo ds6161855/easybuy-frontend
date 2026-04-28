@@ -199,7 +199,7 @@ fullWidth
 label="Enter OTP"
 margin="normal"
 value={otp}
-inputProps={{ maxLength: 6 }}
+inputProps={{ maxLength: 4 }}
 onChange={(e) => {
 
 setOtp(e.target.value.replace(/\D/g, ""));
