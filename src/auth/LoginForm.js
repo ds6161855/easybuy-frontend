@@ -190,7 +190,7 @@ const handleVerifyOtp = async () => {
             label="Enter OTP"
             margin="normal"
             value={otp}
-            inputProps={{ maxLength: 6 }}
+            inputProps={{ maxLength: 4 }}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "");
               setOtp(value);
@@ -204,7 +204,7 @@ const handleVerifyOtp = async () => {
             fullWidth
             variant="contained"
             onClick={handleVerifyOtp}
-            disabled={loading || otp.length !== 6}
+            disabled={loading || otp.length !== 4}
             sx={buttonStyle}
           >
             {loading ? <CircularProgress size={24} /> : "Verify OTP"}
