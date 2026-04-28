@@ -60,8 +60,8 @@ const RegisterForm = ({ switchToLogin = () => {} }) => {
       return false;
     }
 
-    if (!/^\d{6}$/.test(otp)) {
-      setOtpError("Enter valid 6 digit OTP");
+    if (!/^\d{4}$/.test(otp)) {
+      setOtpError("Enter valid 4 digit OTP");
       return false;
     }
 
