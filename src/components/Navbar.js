@@ -74,10 +74,10 @@ const { t } = useTranslation();
       const parsedUser = JSON.parse(storedUser);
   
       // ✅ extra safety
-      if (!parsedUser || !parsedUser.id) {
-        setUser(null);
-        return;
-      }
+     if (!parsedUser || !(parsedUser.id || parsedUser.userId)) {
+  setUser(null);
+  return;
+}
   
       setUser(parsedUser);
     } catch (err) {
