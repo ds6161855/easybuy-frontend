@@ -131,10 +131,16 @@ const handleVerifyOtp = async () => {
       otp: otp
     });
 
-    const user = res.data;
+    const user = {
+  id: res.data.userId || res.data.id,
+  name: res.data.name || "",
+  mobile: res.data.mobile
+};
 
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("userId", user.userId || user.id);
+localStorage.setItem("user", JSON.stringify(user));
+localStorage.setItem("userId", user.id);
+
+   
     localStorage.setItem("isLoggedIn", "true");
     window.dispatchEvent(new Event("userChanged"));
 
