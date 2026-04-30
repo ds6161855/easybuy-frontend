@@ -140,7 +140,7 @@ const handleVerifyOtp = async () => {
 
     showMsg("Login successful", "success");
 await mergeCartAfterLogin();
-    navigate("/", { replace: true });
+    window.location.href = "/";
     onSuccess();
 
   } catch (err) {
