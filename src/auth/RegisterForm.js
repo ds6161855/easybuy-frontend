@@ -60,8 +60,8 @@ const RegisterForm = ({ switchToLogin = () => {} }) => {
       return false;
     }
 
-    if (!/^\d{4}$/.test(otp)) {
-      setOtpError("Enter valid 4 digit OTP");
+    if (!/^\d{6}$/.test(otp)) {
+      setOtpError("Enter valid 6 digit OTP");
       return false;
     }
 
@@ -199,7 +199,7 @@ fullWidth
 label="Enter OTP"
 margin="normal"
 value={otp}
-inputProps={{ maxLength: 4 }}
+inputProps={{ maxLength: 6 }}
 onChange={(e) => {
 
 setOtp(e.target.value.replace(/\D/g, ""));
