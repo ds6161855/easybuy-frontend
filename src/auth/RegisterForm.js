@@ -131,6 +131,7 @@ const handleSendOtp = async () => {
 
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("userId", String(res?.data?.userId));
+      localStorage.setItem("isLoggedIn", "true"); 
 
       window.dispatchEvent(new Event("userChanged"));
 
