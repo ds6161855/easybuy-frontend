@@ -134,7 +134,7 @@ const handleVerifyOtp = async () => {
     const user = res.data;
 
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("userId", user.userId);
+    localStorage.setItem("userId", user.userId || user.id);
     localStorage.setItem("isLoggedIn", "true");
 
     showMsg("Login successful", "success");
