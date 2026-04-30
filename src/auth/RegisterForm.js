@@ -215,7 +215,7 @@ helperText={otpError}
 fullWidth
 variant="contained"
 onClick={handleVerifyOtp}
-disabled={loading || otp.length !== 4}
+disabled={loading || otp.length !== 6}
 sx={flipkartButtonStyle}
 >
 
