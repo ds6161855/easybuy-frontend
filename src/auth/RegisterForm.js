@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   TextField,
@@ -21,6 +21,7 @@ const RegisterForm = ({ switchToLogin = () => {} }) => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState(0);
 
   const [mobileError, setMobileError] = useState("");
   const [otpError, setOtpError] = useState("");
@@ -69,6 +70,12 @@ const RegisterForm = ({ switchToLogin = () => {} }) => {
     return true;
   };
 
+  useEffect(() => {
+  if (timer <= 0) return;
+  const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
+  return () => clearInterval(interval);
+}, [timer]);
+
   const handleMobileChange = (e) => {
 
     const value = e.target.value.replace(/\D/g, "");
@@ -94,6 +101,7 @@ const handleSendOtp = async () => {
     showMsg(res.data.message, "success");
 
     setOtpSent(true);
+    setTimer(30);
 
   } catch (err) {
     showMsg(err?.response?.data?.message || "Failed to send OTP", "error");
@@ -225,6 +233,22 @@ sx={flipkartButtonStyle}
 : "Verify OTP"}
 
 </Button>
+
+  {/* 👇 YAHAN ADD KARNA HAI */}
+  {timer > 0 ? (
+    <Typography mt={2} fontSize={13} color="text.secondary">
+      Resend OTP in {timer}s
+    </Typography>
+  ) : (
+    <Typography
+      mt={2}
+      fontSize={13}
+      sx={{ cursor: "pointer", color: "#2874f0" }}
+      onClick={handleSendOtp}
+    >
+      Resend OTP
+    </Typography>
+  )}
 
 </>
 
