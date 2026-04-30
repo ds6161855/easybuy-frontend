@@ -136,6 +136,7 @@ const handleVerifyOtp = async () => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("userId", user.userId || user.id);
     localStorage.setItem("isLoggedIn", "true");
+    window.dispatchEvent(new Event("userChanged"));
 
     showMsg("Login successful", "success");
 await mergeCartAfterLogin();
