@@ -83,10 +83,11 @@ const RegisterForm = ({ switchToLogin = () => {} }) => {
 
 const handleSendOtp = async () => {
   if (!validateMobile()) return;
+   const isLogin = false;
   setLoading(true);
 
   try {
-    const res = await api.post("/api/auth/send-otp?isLogin=true", {
+    const res = await api.post("/api/auth/send-otp?isLogin=false", {
   mobile: mobile
 });
 
